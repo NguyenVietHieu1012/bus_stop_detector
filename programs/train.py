@@ -15,17 +15,22 @@ model = YOLO('../models/yolo11n.pt')
 
 results = model.train(
     data="C:/Users/Admin/PycharmProjects/GamePro/bus_stop_detector/dataset/data.yaml",
-    epochs=100,
-    augment=True,  # Sử dụng tăng cường dữ liệu
-    hsv_h=0.03,    # Điều chỉnh màu sắc
-    hsv_s=0.7,     # Điều chỉnh độ bão hòa
-    hsv_v=0.4,     # Điều chỉnh độ sáng
-    scale=0.5,
+    epochs=150,
+    augment=True,
     device=0,
     workers=0,
     amp=False,
-    batch=4
+    batch=4,
+    lr0=0.0442302,
+    lrf=0.260472,
+    momentum=0.658896,
+    weight_decay=0.000496704,
+    warmup_epochs=0.438574,
+    box=0.0872528,
+    hsv_h=0.0165629,
+    cls=1.2936,
+    translate=0.0941287
 )
 
 # Lưu mô hình sau khi huấn luyện
-model.save("C:/Users/Admin/PycharmProjects/GamePro/bus_stop_detector/models/trained_model.pt")
+model.save("C:/Users/Admin/PycharmProjects/GamePro/bus_stop_detector/models/trained_model_tuned.pt")

@@ -1,7 +1,7 @@
 from ultralytics import YOLO
 
 # Tải mô hình đã huấn luyện
-model = YOLO("C:/Users/Admin/PycharmProjects/GamePro/bus_stop_detector/models/trained_model.pt")
+model = YOLO("C:/Users/Admin/PycharmProjects/GamePro/bus_stop_detector/models/trained_model_tuned.pt")
 
 # Đánh giá mô hình trên tập kiểm tra
 results = model.val(data="C:/Users/Admin/PycharmProjects/GamePro/bus_stop_detector/dataset/data.yaml", device=0, amp=False, batch=4, workers=0)
