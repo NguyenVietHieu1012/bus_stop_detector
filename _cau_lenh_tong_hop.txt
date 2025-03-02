@@ -1,0 +1,243 @@
+---
+
+ 1. Quản lý phiên (Sessions)
+
+- Khởi tạo và kết nối:
+  - `tmux`  
+    Mở phiên tmux mới.
+  - `tmux new` hoặc `tmux new-session`  
+    Tạo phiên mới.
+  - `tmux new-session -A -s mysession`  
+    Tạo phiên mới với tên mysession hoặc kết nối nếu đã tồn tại.
+  - `tmux new -s mysession`  
+    Tạo phiên mới với tên mysession.
+  - `tmux attach` hoặc `tmux a`  
+    Kết nối lại với phiên cuối cùng.
+  - `tmux attach -t mysession`  
+    Kết nối vào phiên có tên mysession.
+  
+- Danh sách và kết thúc:
+  - `tmux ls` hoặc `tmux list-sessions`  
+    Liệt kê tất cả các phiên đang chạy.
+  - `tmux kill-session -t mysession`  
+    Kết thúc phiên có tên mysession.
+  - `tmux kill-session -a`  
+    Kết thúc tất cả các phiên ngoại trừ phiên hiện tại.
+  - `tmux kill-session -a -t mysession`  
+    Kết thúc tất cả các phiên ngoại trừ mysession.
+  
+- Trong phiên:
+  - `Ctrl+b` + `$`  
+    Đổi tên phiên hiện tại.
+  - `Ctrl+b` + `d`  
+    Tách phiên (detach) – giữ phiên chạy ở nền.
+
+---
+
+ 2. Quản lý cửa sổ (Windows)
+
+- Tạo và chuyển đổi:
+  - `tmux new -s mysession -n mywindow`  
+    Tạo phiên mysession với cửa sổ mới có tên mywindow.
+  - `Ctrl+b` + `c`  
+    Tạo cửa sổ mới.
+  - `Ctrl+b` + `0...9`  
+    Chuyển đến cửa sổ theo số chỉ định.
+  - `Ctrl+b` + `n` và `Ctrl+b` + `p`  
+    Chuyển đến cửa sổ kế tiếp hoặc trước đó.
+  - `Ctrl+b` + `l`  
+    Chuyển về cửa sổ cuối cùng đã sử dụng.
+  - `Ctrl+b` + `w`  
+    Hiển thị danh sách các cửa sổ.
+  
+- Đổi tên, đóng và sắp xếp:
+  - `Ctrl+b` + `,`  
+    Đổi tên cửa sổ hiện tại.
+  - `Ctrl+b` + `&`  
+    Đóng cửa sổ hiện tại.
+  - `swap-window -s 2 -t 1`  
+    Đổi vị trí của cửa sổ số 2 với cửa sổ số 1.
+  - `swap-window -t -1`  
+    Di chuyển cửa sổ hiện tại sang bên trái 1 vị trí.
+  - `move-window -s src_ses:win -t target_ses:win`  
+    Di chuyển cửa sổ từ phiên/cửa sổ nguồn sang đích.
+  - `move-window -r`  
+    Sắp xếp lại thứ tự cửa sổ (loại bỏ khoảng trống).
+
+---
+
+ 3. Quản lý pane (Phân vùng trong cửa sổ)
+
+- Chia pane:
+  - `Ctrl+b` + `%`  
+    Chia pane theo chiều dọc (hai pane bên cạnh nhau).
+  - `Ctrl+b` + `"`  
+    Chia pane theo chiều ngang (pane trên dưới nhau).
+  
+- Điều chỉnh và chuyển đổi:
+  - `Ctrl+b` + `;`  
+    Chuyển về pane vừa sử dụng trước đó.
+  - `Ctrl+b` + `o`  
+    Chuyển sang pane tiếp theo.
+  - `Ctrl+b` + `q`  
+    Hiển thị số thứ tự các pane.
+  - `Ctrl+b` + `q` + `0...9`  
+    Chọn pane theo số.
+  - `Ctrl+b` + `Spacebar`  
+    Chuyển đổi giữa các bố cục pane.
+  
+- Di chuyển và chuyển đổi dạng:
+  - `Ctrl+b` + `{` và `Ctrl+b` + `}`  
+    Di chuyển pane hiện tại sang bên trái hoặc phải.
+  - `join-pane -s 2 -t 1`  
+    Gom pane từ cửa sổ 2 vào cửa sổ 1.
+  - `join-pane -s 2.1 -t 1.0`  
+    Di chuyển pane (số 1 từ cửa sổ 2) vào vị trí sau pane số 0 của cửa sổ 1.
+  - `Ctrl+b` + `!`  
+    Chuyển pane hiện tại thành cửa sổ riêng.
+  
+- Thay đổi kích thước:
+  - `resize-pane -D`  
+    Tăng kích thước pane theo chiều xuống.
+  - `resize-pane -U`  
+    Tăng kích thước pane theo chiều lên.
+  - `resize-pane -L`  
+    Giảm kích thước pane theo chiều trái.
+  - `resize-pane -R`  
+    Tăng kích thước pane theo chiều phải.
+  - Có thể thêm số sau lệnh (ví dụ: `resize-pane -D 10` để thay đổi 10 ô).
+
+- Đóng pane:
+  - `Ctrl+b` + `x`  
+    Đóng pane hiện tại.
+
+---
+
+ 4. Chế độ sao chép (Copy Mode)
+
+- Vào và thoát chế độ sao chép:
+  - `setw -g mode-keys vi`  
+    Cài đặt sử dụng phím tắt kiểu vi trong Copy Mode.
+  - `Ctrl+b` + `[`  
+    Vào Copy Mode.
+  - `Ctrl+b` + `PgUp`  
+    Vào Copy Mode và cuộn lên một trang.
+  - `q`  
+    Thoát khỏi Copy Mode.
+  
+- Điều hướng và sao chép:
+  - `g` và `G`  
+    Di chuyển đến đầu hoặc cuối trang.
+  - `h`, `j`, `k`, `l`  
+    Di chuyển con trỏ sang trái, xuống, lên, phải.
+  - `w` và `b`  
+    Di chuyển theo từ (tiến/lùi).
+  - `/` và `?`  
+    Tìm kiếm theo hướng tiến hoặc lùi.
+  - `n` và `N`  
+    Tìm từ khóa tiếp theo hoặc trước đó.
+  - `Spacebar`  
+    Bắt đầu lựa chọn văn bản.
+  - `Esc`  
+    Hủy lựa chọn.
+  - `Enter`  
+    Sao chép phần văn bản đã chọn.
+  - `Ctrl+b` + `]`  
+    Dán nội dung đã sao chép.
+  
+- Các lệnh liên quan:
+  - `capture-pane`  
+    Sao chép toàn bộ nội dung hiển thị của pane vào bộ nhớ đệm.
+  - `list-buffers`  
+    Liệt kê các bộ nhớ đệm.
+  - `choose-buffer`  
+    Hiển thị danh sách các bộ nhớ đệm để chọn và dán.
+
+---
+
+ 5. Các lệnh khác và cấu hình
+
+- Vào chế độ lệnh:
+  - `Ctrl+b` + `:`  
+    Mở command prompt để nhập lệnh trực tiếp.
+  
+- Cấu hình tmux:
+  - `set -g OPTION`  
+    Áp dụng cấu hình (OPTION) cho tất cả các phiên.
+  - `setw -g OPTION`  
+    Áp dụng cấu hình (OPTION) cho tất cả các cửa sổ.
+  - `set mouse on`  
+    Bật chế độ hỗ trợ chuột.
+  
+- Trợ giúp:
+  - `Ctrl+b` + `?`  
+    Hiển thị danh sách các phím tắt trong tmux.
+  - `tmux info`  
+    Hiển thị thông tin chi tiết về phiên, cửa sổ và pane.
+
+---
+
+---
+
+ 1. Kết nối đến máy chủ từ xa và điều hướng thư mục
+
+ssh ntq@10.0.64.77
+
+cd /data_hdd_16t
+
+
+---
+
+ 2. Các lệnh liên quan đến YOLOX
+
+cd /data_hdd_16t/hieu_yolox/YOLOX
+
+source yolox_env/bin/activate
+
+pip install -v -e .
+
+python3 tools/train.py -f exps/example/custom/yolox_s.py -d 1 -b 4 --fp16 False -o -c /data_hdd_16t/hieu_yolox/yolox_s.pth
+
+python tools/demo.py video -n yolox-s -f exps/example/custom/yolox_s.py -c /data_hdd_16t/hieu_yolox/YOLOX/YOLOX_outputs/yolox_s/best_ckpt.pth --path /data_hdd_16t/hieu_yolox/test_video.mp4 --conf 0.25 --nms 0.45 --tsize 640 --save_result --device gpu
+
+
+---
+
+ 3. Các lệnh liên quan đến YOLOv11
+
+/data_hdd_16t/hieu_yolox/versions/YOLOv11/models
+/data_hdd_16t/hieu_yolox/versions/YOLOv11/models/trained_model.pt
+
+source yoloenv/bin/activate
+
+python3 versions/YOLOv11/programs/train.py
+```
+
+---
+
+ 4. Các lệnh truyền file bằng SCP
+
+scp "D:\test_video.mp4" ntq@10.0.64.77:/data_hdd_16t/hieu_yolox/test_video.mp4
+
+scp ntq@10.0.64.77:/data_hdd_16t/hieu_yolox/versions/YOLOv11/models/trained_model_300.pt "C:\Users\Admin\PyCharmProjects\GamePro\bus_stop_detector\models"
+
+scp -r "C:\Users\Admin\PyCharmProjects\GamePro\bus_stop_detector\dataset\COCO" ntq@10.0.64.77:/data_hdd_16t/hieu_yolox/datasets
+
+scp ntq@10.0.64.77:/data_hdd_16t/hieu_yolox/YOLOX/YOLOX_outputs/yolox_s/best_ckpt.pth "C:\Users\Admin\PyCharmProjects\GamePro\bus_stop_detector\models"
+
+
+---
+
+ 5. Re-install PyTorch và các gói liên quan
+
+pip3 install --upgrade --force-reinstall torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+
+---
+
+rm programs/.train.py.swp
+
+tmux attach -t train_yolo11
+
+ssh-keygen -t rsa -b 4096 -C "hieu2002manga@gmail.com"
+
+set GEMINI_API_KEY=AIzaSyA2KgO5PIqlSLlKJAWweGKUvTviBELIe7Q
